@@ -219,37 +219,8 @@ animation:blinkrainbow 2s linear infinite
     }, 10000);
 </script>
 <div class="div-history">
-<h1 >LIVE 6D</h1>
-<div class="content" style="margin-top:10px;text-align: center;">
-
+<h1>HISTORY</h1>
+    <div style="margin-top:10px;">
         
-        <div class="tanggal">
-            <?php echo $result->hari.", ".$result->tgl." ".$result->bulan." ".$result->tahun;?>
-            
-        </div>
-        <div class="result">
-            <span class="blinkrainbow"><?=$result->result;?></span>
-            <!-- <h1>9106</h1> -->
-        </div>
-        <div class="nomer" align="center">
-            <!-- <div class="ball inline ball1">
-                3            </div>
-            <div class="ball inline ball2">
-                19            </div>
-            <div class="ball inline ball3">
-                20            </div>
-            <div class="ball inline ball4">
-                25            </div>
-            <div class="ball inline ball5">
-                46            </div>
-            <div class="ball inline ball6">
-                49            </div>
-            <div class="ball ball7">
-                34            </div> -->
-
-            <div class="tanggal">
-                DRAW: 6.30 PM (SGT)
-            </div>
     </div>
-</div>
 </div>
