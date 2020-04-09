@@ -169,4 +169,45 @@ class Admin extends CI_Controller {
         
         $this->load->view('backend/index', $page_data);
     }
+
+    function change_password(){
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(site_url('login'), 'refresh');
+        
+        $data = $this->db->get_where('admin', array('admin_id' => $this->session->userdata('admin_id')))->result_array();
+			
+        $page_data['page_name']  = 'profile';
+        $page_data['profile']  = $data;
+        $page_data['page_ket']  = 'Ubah Data';
+        $page_data['page_title'] = 'Ubah Profile';
+        
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function update_password(){
+        $data['name']             = $this->input->post('name');
+        $data['username']             = $this->input->post('username');
+
+        $data['password']             = sha1($this->input->post('password'));
+        $data['new_password']         = sha1($this->input->post('new_password'));
+        $data['confirm_new_password'] = sha1($this->input->post('confirm_new_password'));
+
+        $current_password = $this->db->get_where('admin', array(
+            'admin_id' => $this->session->userdata('admin_id')
+        ))->row()->password;
+        if ($current_password == $data['password'] && $data['new_password'] == $data['confirm_new_password']) {
+            $this->db->where('admin_id', $this->session->userdata('admin_id'));
+            $this->db->update('admin', array(
+                'password' => $data['new_password'],
+                'name' => $data['name'],
+                'username' => $data['username']
+            ));
+            $this->session->set_flashdata('flash_message', 'Password Berhasil Dirubah');
+            redirect(site_url('admin/dahsboard'), 'refresh');
+        } else {
+            $this->session->set_flashdata('error_message', 'Parword Tidak Sama');
+            redirect(site_url('admin/change_password'), 'refresh');
+        }
+        
+    }
 }

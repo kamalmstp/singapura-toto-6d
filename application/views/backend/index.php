@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -74,6 +75,25 @@
       </h1>
     </section>
     <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+      <?php if ($this->session->flashdata('flash_message') != ""):?>
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+          <?php echo $this->session->flashdata("flash_message");?>
+        </div>
+      <?php endif;?>
+
+      <?php if ($this->session->flashdata('error_message') != ""):?>
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4><i class="icon fa fa-danger"></i> Gagal!</h4>
+          <?php echo $this->session->flashdata("flash_message");?>
+        </div>
+      <?php endif;?>
+      </div>
+      </div>
       <br>
         <?php include $page_name.'.php';?>
     </section>
