@@ -5,11 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="robots" content="index,follow" />
-        <meta name="author" content="toto" />          
+        <meta name="author" content="toto" />
         <link type="text/css" rel="stylesheet" href="<?php echo base_url('assets/css.css'); ?>" />
         <title>Toto Singapore 6D</title>
         <style type="text/css">
-            
+
     h1{
         font-size: 48px !important;
         font-weight: bold !important;
@@ -219,8 +219,78 @@ animation:blinkrainbow 2s linear infinite
     }, 10000);
 </script>
 <div class="div-history">
-<h1>HISTORY</h1>
+<!-- <h1>HISTORY</h1> -->
     <div style="margin-top:10px;">
-        
+      <?php
+
+      if ($jumlah->num_rows() > 0) {
+
+        $this->db->select('*');
+        $this->db->group_by('bulan');
+        $this->db->order_by('result_id', 'desc');
+        $db = $this->db->get('result')->result_array();
+        foreach ($db as $row1):
+       ?>
+      <div class="row">
+          <div class="col-md-9">
+              <div class="box box-solid">
+                  <div class="box-header with-border">
+                      <h1>
+                      <?php $bln	= date ("M Y", strtotime($row1['tanggal']));
+                      echo 'History '.$bln; ?>
+                    </h1>
+                  </div>
+                  <div class="box-body">
+                      <?php
+                      $hari	= date("d");
+                      $bulan	= date ("m", strtotime($row1['bulan']));
+                      $tahun	= date("Y");
+                      $jumlahhari=date("t",mktime(0,0,0,$bulan,$hari,$tahun));
+                      ?>
+                      <table style="border:2px solid #1E90FF">
+                          <tr bgcolor="#FFD700">
+                              <td align=center style="border:2px solid #1E90FF"><font color="#FF0000">Minggu</font></td>
+                              <td align=center style="border:2px solid #1E90FF">Senin</td>
+                              <td align=center style="border:2px solid #1E90FF">Selasa</td>
+                              <td align=center style="border:2px solid #1E90FF">Rabu</td>
+                              <td align=center style="border:2px solid #1E90FF">Kamis</td>
+                              <td align=center style="border:2px solid #1E90FF">Jumat</td>
+                              <td align=center style="border:2px solid #1E90FF">Sabtu</td>
+                          </tr>
+                          <?php
+                          $s=date ("w", mktime (0,0,0,$bulan,1,$tahun));
+
+                          for ($ds=1;$ds<=$s;$ds++) {
+                          echo "<td style='border:2px solid #1E90FF'></td>";
+                          }
+
+                          for ($d=1;$d<=$jumlahhari;$d++) {
+
+                              if (date("w",mktime (0,0,0,$bulan,$d,$tahun)) == 0) {
+                                  echo "<tr bgcolor='#FFF' style='border:2px solid #1E90FF'>";
+                                  }
+                          $warna="#000000"; // warna default
+
+                          $mix = $tahun."-".$bulan."-".$d;
+                          $hhh = $this->db->get_where('result', array('tanggal' => $mix ));
+
+                          if (date("l",mktime (0,0,0,$bulan,$d,$tahun)) == "Sunday") { $warna="#FF0000"; }
+                          echo "<td bgcolor='#FFF' style='border:2px solid #1E90FF' align=center valign=middle> <span style=\"color:$warna\">";
+                          if ($hhh->num_rows() > 0){echo $hhh->row()->result;}else{echo '-';}
+                          echo "</span></td>";
+                          if (date("w",mktime (0,0,0,$bulan,$d,$tahun)) == 6) { echo "</tr>"; }
+                          }; ?>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <?php endforeach;
+      }else {
+
+        echo 'Data Kosong';
+      }
+      ?>
+
     </div>
 </div>

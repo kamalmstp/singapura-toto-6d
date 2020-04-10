@@ -16,19 +16,21 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/fullcalendar/dist/fullcalendar.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/fullcalendar/dist/fullcalendar.print.min.css'); ?>" media="print">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
-  
+
     <a href="index2.html" class="logo">
       <span class="logo-mini"><b>6</b>D</span>
       <span class="logo-lg"><b>Toto Singapura </b>6D</span>
     </a>
-  
+
     <nav class="navbar navbar-static-top">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
@@ -41,7 +43,7 @@
               <span class="hidden-xs"><?=$this->session->userdata('name');?></span>
             </a>
             <ul class="dropdown-menu">
-            
+
               <li class="user-header">
                 <img src="<?php echo base_url('assets/dist/img/user2-160x160.jpg'); ?>" class="img-circle" alt="User Image">
                 <p>
@@ -49,7 +51,7 @@
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Change Password</a>
+                  <a href="<?php echo site_url('admin/change_password'); ?>" class="btn btn-default btn-flat">Change Password</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?php echo site_url('login/logout'); ?>" class="btn btn-default btn-flat">Logout</a>
@@ -97,7 +99,7 @@
       <br>
         <?php include $page_name.'.php';?>
     </section>
-  
+
   </div>
 
   <footer class="main-footer">
@@ -147,6 +149,32 @@
 <script src="<?php echo base_url('assets/dist/js/demo.js'); ?>"></script>
 <script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
+
+<script src="<?php echo base_url('assets/bower_components/moment/moment.js'); ?>"></script>
+<script src="<?php echo base_url('assets/bower_components/fullcalendar/dist/fullcalendar.min.js'); ?>"></script>
+
+<script>
+  $(function () {
+
+    var date = new Date()
+    var d    = date.getDate(),
+        m    = date.getMonth(),
+        y    = date.getFullYear()
+    $('#calendar').fullCalendar({
+      header    : {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: 'today',
+        month: 'month',
+        week : 'week',
+        day  : 'day'
+      }
+    })
+  })
+</script>
 
 <script>
   $(function () {

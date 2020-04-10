@@ -8,7 +8,7 @@ class Admin extends CI_Controller {
         $this->load->database();
         $this->load->library('session');
 	}
-	
+
 
 	public function index()
 	{
@@ -22,11 +22,11 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
 			redirect(site_url('login'), 'refresh');
-			
+
         $page_data['page_name']  = 'dashboard';
         $page_data['page_ket']  = 'Beranda';
         $page_data['page_title'] = 'Dashboard';
-        
+
         $this->load->view('backend/index', $page_data);
     }
 
@@ -34,15 +34,15 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
             redirect(site_url('login'), 'refresh');
-        
+
         $this->db->order_by('result_id', 'desc');
         $data = $this->db->get('result')->result_array();
-			
+
         $page_data['page_name']  = 'result';
         $page_data['result']  = $data;
         $page_data['page_ket']  = 'List Result';
         $page_data['page_title'] = 'Data Result';
-        
+
         $this->load->view('backend/index', $page_data);
     }
 
@@ -50,11 +50,11 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
 			redirect(site_url('login'), 'refresh');
-			
+
         $page_data['page_name']  = 'result_add';
         $page_data['page_ket']  = 'Tambah Result';
         $page_data['page_title'] = 'Tambah Data Result';
-        
+
         $this->load->view('backend/index', $page_data);
     }
 
@@ -62,14 +62,14 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
 			redirect(site_url('login'), 'refresh');
-        
+
         $data = $this->db->get_where('result', array('result_id' => $id))->row();
 
         $page_data['page_name']  = 'result_edit';
         $page_data['page_ket']  = 'Edit Result';
         $page_data['result']  = $data;
         $page_data['page_title'] = 'Edit Data Result';
-        
+
         $this->load->view('backend/index', $page_data);
     }
 
@@ -77,7 +77,7 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
             redirect(site_url('login'), 'refresh');
-        
+
         $hari = date("l", strtotime($this->input->post('tanggal')));
         if ($hari == "Sunday") {
             $nmhari = "Minggu";
@@ -94,7 +94,7 @@ class Admin extends CI_Controller {
         }else{
             $nmhari = "Sabtu";
         }
-        
+
         $data['tanggal']      = html_escape($this->input->post('tanggal'));
         $data['hari']      = $nmhari;
         $data['tgl']      = date("d", strtotime($this->input->post('tanggal')));
@@ -111,7 +111,7 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
             redirect(site_url('login'), 'refresh');
-        
+
         $hari = date("l", strtotime($this->input->post('tanggal')));
         if ($hari == "Sunday") {
             $nmhari = "Minggu";
@@ -128,7 +128,7 @@ class Admin extends CI_Controller {
         }else{
             $nmhari = "Sabtu";
         }
-        
+
         $id      = html_escape($this->input->post('result_id'));
         $data['tanggal']      = html_escape($this->input->post('tanggal'));
         $data['hari']      = $nmhari;
@@ -136,7 +136,7 @@ class Admin extends CI_Controller {
         $data['bulan']      = date("M", strtotime($this->input->post('tanggal')));
         $data['tahun']      = date("Y", strtotime($this->input->post('tanggal')));
         $data['result']      = html_escape($this->input->post('result'));
-        
+
         $this->db->where('result_id', $id);
         $this->db->update('result', $data);
 
@@ -148,10 +148,10 @@ class Admin extends CI_Controller {
     {
         if ($this->session->userdata('admin_login') != 1)
             redirect(site_url('login'), 'refresh');
-        
+
         $this->db->where('result_id', $id);
         $this->db->delete('result');
-        
+
         $this->session->set_flashdata('flash_message' , 'Data Berhasil Dihapus');
         redirect(site_url('admin/result'), 'refresh');
     }
@@ -159,28 +159,34 @@ class Admin extends CI_Controller {
     function history(){
         if ($this->session->userdata('admin_login') != 1)
             redirect(site_url('login'), 'refresh');
-        
+
         $data = $this->db->get('result')->result_array();
-			
+
+				$this->db->select('*');
+			  $this->db->group_by('bulan');
+			  $this->db->order_by('result_id', 'desc');
+			  $jumlah = $this->db->get('result');
+
         $page_data['page_name']  = 'history';
         $page_data['history']  = $data;
+				$page_data['jumlah'] = $jumlah;
         $page_data['page_ket']  = 'List History';
         $page_data['page_title'] = 'Data History';
-        
+
         $this->load->view('backend/index', $page_data);
     }
 
     function change_password(){
         if ($this->session->userdata('admin_login') != 1)
             redirect(site_url('login'), 'refresh');
-        
+
         $data = $this->db->get_where('admin', array('admin_id' => $this->session->userdata('admin_id')))->result_array();
-			
+
         $page_data['page_name']  = 'profile';
         $page_data['profile']  = $data;
         $page_data['page_ket']  = 'Ubah Data';
         $page_data['page_title'] = 'Ubah Profile';
-        
+
         $this->load->view('backend/index', $page_data);
     }
 
@@ -208,6 +214,6 @@ class Admin extends CI_Controller {
             $this->session->set_flashdata('error_message', 'Parword Tidak Sama');
             redirect(site_url('admin/change_password'), 'refresh');
         }
-        
+
     }
 }

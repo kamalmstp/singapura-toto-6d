@@ -8,10 +8,17 @@ class History extends CI_Controller {
         $this->load->database();
         $this->load->library('session');
 	}
-	
+
 
 	public function index()
 	{
-		$this->load->view('history');
+		$this->db->select('*');
+		$this->db->group_by('bulan');
+		$this->db->order_by('result_id', 'desc');
+		$jumlah = $this->db->get('result');
+
+		$page_data['jumlah'] = $jumlah;
+
+		$this->load->view('history', $page_data);
 	}
 }

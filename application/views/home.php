@@ -5,11 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="robots" content="index,follow" />
-        <meta name="author" content="toto" />          
+        <meta name="author" content="toto" />
         <link type="text/css" rel="stylesheet" href="<?php echo base_url('assets/css.css'); ?>" />
         <title>Toto Singapore 6D</title>
         <style type="text/css">
-            
+
     h1{
         font-size: 48px !important;
         font-weight: bold !important;
@@ -222,10 +222,10 @@ animation:blinkrainbow 2s linear infinite
 <h1 >LIVE 6D</h1>
 <div class="content" style="margin-top:10px;text-align: center;">
 
-        
+
         <div class="tanggal">
             <?php echo $result->hari.", ".$result->tgl." ".$result->bulan." ".$result->tahun;?>
-            
+
         </div>
         <div class="result">
             <span class="blinkrainbow"><?=$result->result;?></span>
@@ -248,7 +248,7 @@ animation:blinkrainbow 2s linear infinite
                 34            </div> -->
 
             <div class="tanggal">
-                DRAW: 6.30 PM (SGT)
+                
             </div>
     </div>
 </div>
